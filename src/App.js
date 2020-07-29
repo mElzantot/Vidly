@@ -1,6 +1,8 @@
 import React from "react";
 import "./App.css";
+
 import Movie from "./Component/Movie";
+import Genres from "./Component/Genres";
 
 function App() {
   return (
