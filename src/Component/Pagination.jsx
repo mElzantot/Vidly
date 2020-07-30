@@ -18,9 +18,9 @@ class Pagination extends Component {
               }
               key={page}
             >
-              <a className="page-link" onClick={() => OnPageChange(page)}>
+              <button className="page-link" onClick={() => OnPageChange(page)}>
                 {page}
-              </a>
+              </button>
             </li>
           ))}
         </ul>

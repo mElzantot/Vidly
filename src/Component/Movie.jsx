@@ -5,12 +5,15 @@ import Pagination from "./Pagination.jsx";
 import Genres from "./Genres.jsx";
 import MoviesTable from "./MoviesTable";
 
+import _ from "lodash";
+
 class Movie extends Component {
   state = {
     movies: [],
     currentPage: 1,
-    currentGenre: { name: "All Genres" },
+    currentGenre: { name: "All Genres", _id: " " },
     pageSize: 3,
+    currentSort: { path: "title", order: "asc" },
   };
 
   //-------Component Mount
@@ -45,19 +48,36 @@ class Movie extends Component {
   };
 
   handlGenre = (genre) => {
-    console.log(genre);
     this.setState({ currentGenre: genre, currentPage: 1 });
-    console.log(this.state.movies);
+  };
+
+  handleSort = (currentSort) => {
+    this.setState({ currentSort });
   };
 
   render() {
-    let { movies: allMovies, pageSize, currentPage, currentGenre } = this.state;
-    allMovies = currentGenre._id
-      ? allMovies.filter((m) => m.genre._id === currentGenre._id)
-      : allMovies;
+    let {
+      movies: allMovies,
+      pageSize,
+      currentPage,
+      currentGenre,
+      currentSort,
+    } = this.state;
 
+    //----------Filtered by Genres
+    allMovies =
+      currentGenre._id !== " "
+        ? allMovies.filter((m) => m.genre._id === currentGenre._id)
+        : allMovies;
+
+    //----------Sorting
+    allMovies = _.orderBy(allMovies, [currentSort.path], [currentSort.order]);
+
+    //--------Check if there is Movies to display
     if (allMovies.length === 0)
       return <p>There are NO movies in the DataBase</p>;
+
+    //----Pagination
     let start = pageSize * (currentPage - 1);
     let movies = allMovies.slice(start, start + pageSize);
     return (
@@ -71,6 +91,8 @@ class Movie extends Component {
             movies={movies}
             onLikeChange={this.handleLike}
             onDelete={this.handleDelete}
+            onSort={this.handleSort}
+            currentSort={currentSort}
           />
           <Pagination
             moviesCount={allMovies.length}

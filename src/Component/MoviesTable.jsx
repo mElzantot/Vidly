@@ -1,43 +1,43 @@
 import React, { Component } from "react";
 import Like from "./Like";
+import Table from "./Table";
 
 class MoviesTable extends Component {
-  state = {};
+  columns = [
+    { path: "title", label: "Title" },
+    { path: "genre.name", label: "Genre" },
+    { path: "numberInStock", label: "In Stock" },
+    { path: "dailyRentalRate", label: "Rate" },
+    {
+      key: "like",
+      content: (movie) => (
+        <Like movie={movie} onLike={this.props.onLikeChange} />
+      ),
+    },
+    {
+      key: "delete",
+      content: (movie) => (
+        <button
+          className="btn btn-sm btn-danger m-2"
+          onClick={() => this.props.onDelete(movie)}
+        >
+          Delete
+        </button>
+      ),
+    },
+  ];
+
   render() {
+    const { movies, onLikeChange, onDelete, currentSort, onSort } = this.props;
     return (
-      <table className="table table-sm">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Genre</th>
-            <th>Stock</th>
-            <th>Rate</th>
-            <th />
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {this.props.movies.map((movie) => (
-            <tr key={movie._id}>
-              <td>{movie.title}</td>
-              <td>{movie.genre.name}</td>
-              <td>{movie.numberInStock}</td>
-              <td>{movie.dailyRentalRate}</td>
-              <td>
-                <Like movie={movie} onLike={this.props.onLikeChange} />
-              </td>
-              <td>
-                <button
-                  className="btn btn-sm btn-danger m-2"
-                  onClick={() => this.props.onDelete(movie)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Table
+        columns={this.columns}
+        movies={movies}
+        currentSort={currentSort}
+        onSort={onSort}
+        onDelete={onDelete}
+        onLikeChange={onLikeChange}
+      />
     );
   }
 }
