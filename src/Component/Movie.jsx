@@ -55,7 +55,7 @@ class Movie extends Component {
     this.setState({ currentSort });
   };
 
-  render() {
+  getPageDate = () => {
     let {
       movies: allMovies,
       pageSize,
@@ -63,7 +63,6 @@ class Movie extends Component {
       currentGenre,
       currentSort,
     } = this.state;
-
     //----------Filtered by Genres
     allMovies =
       currentGenre._id !== " "
@@ -73,19 +72,28 @@ class Movie extends Component {
     //----------Sorting
     allMovies = _.orderBy(allMovies, [currentSort.path], [currentSort.order]);
 
+    //----Pagination
+    let start = pageSize * (currentPage - 1);
+    let movies = allMovies.slice(start, start + pageSize);
+
+    return { movies, moviesCount: allMovies.length };
+  };
+
+  render() {
+    let { movies: allMovies, pageSize, currentPage, currentSort } = this.state;
+
     //--------Check if there is Movies to display
     if (allMovies.length === 0)
       return <p>There are NO movies in the DataBase</p>;
 
-    //----Pagination
-    let start = pageSize * (currentPage - 1);
-    let movies = allMovies.slice(start, start + pageSize);
+    const { movies, moviesCount } = this.getPageDate();
+
     return (
       <div className="row">
         <Genres onGenreChange={this.handlGenre} />
         <div className="col">
           <div className="m-2">
-            Showing {allMovies.length} movies in the DataBase
+            Showing {moviesCount} movies in the DataBase
           </div>
           <MoviesTable
             movies={movies}
@@ -95,7 +103,7 @@ class Movie extends Component {
             currentSort={currentSort}
           />
           <Pagination
-            moviesCount={allMovies.length}
+            moviesCount={moviesCount}
             pageSize={pageSize}
             currentPage={currentPage}
             OnPageChange={this.handlePagination}
