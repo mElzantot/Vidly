@@ -89,7 +89,7 @@ class Movie extends Component {
     const { movies, moviesCount } = this.getPageDate();
 
     return (
-      <div className="row">
+      <div className="row mt-5">
         <Genres onGenreChange={this.handlGenre} />
         <div className="col">
           <div className="m-2">

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import _ from "lodash";
 
 class TableBody extends Component {
@@ -6,6 +7,8 @@ class TableBody extends Component {
 
   renderCell = (movie, col) => {
     if (col.content) return col.content(movie);
+    else if (col.path === "title")
+      return <Link to={"/movies/" + movie._id}>{movie.title}</Link>;
     else return _.get(movie, col.path);
   };
 
