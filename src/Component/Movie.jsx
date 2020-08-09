@@ -6,6 +6,7 @@ import Genres from "./Genres.jsx";
 import MoviesTable from "./MoviesTable";
 
 import _ from "lodash";
+import { Link } from "react-router-dom";
 
 class Movie extends Component {
   state = {
@@ -93,6 +94,11 @@ class Movie extends Component {
         <Genres onGenreChange={this.handlGenre} />
         <div className="col">
           <div className="m-2">
+            <div>
+              <Link to="/movieform" className="btn btn-primary btn-sm m-2">
+                New Movie
+              </Link>
+            </div>
             Showing {moviesCount} movies in the DataBase
           </div>
           <MoviesTable

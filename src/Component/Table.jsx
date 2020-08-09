@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
 import TableHead from "./TableHead";
 import TableBody from "./TableBody";
-import MovieForm from "./NavBar test Pages/MovieForm";
 
 class Table extends Component {
   state = {};

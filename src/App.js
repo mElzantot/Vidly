@@ -8,6 +8,8 @@ import Customers from "./Component/NavBar test Pages/Customers";
 import Rentals from "./Component/NavBar test Pages/Rentals";
 import NotFound from "./Component/NavBar test Pages/NotFound";
 import MovieForm from "./Component/NavBar test Pages/MovieForm";
+import RegisterForm from "./Component/RegisterForm";
+import NewMovieForm from "./Component/NavBar test Pages/MovieForm";
 
 class App extends Component {
   render() {
@@ -17,11 +19,11 @@ class App extends Component {
         <main className="container">
           <Switch>
             <Route path="/movies" exact component={Movie} />
-            <Route path="/movies/:id" component={MovieForm} />
-
+            <Route path="/movieform/:id?" component={MovieForm} />
+            <Route path="/movie/new" component={NewMovieForm} />
             <Route path="/rentals" component={Rentals} />
             <Route path="/customers" component={Customers} />
-
+            <Route path="/register" component={RegisterForm} />
             <Route path="/" exact component={Movie} />
             <Route path="/notFound" component={NotFound} />
             <Redirect to="/Notfound" />

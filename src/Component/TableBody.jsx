@@ -8,7 +8,7 @@ class TableBody extends Component {
   renderCell = (movie, col) => {
     if (col.content) return col.content(movie);
     else if (col.path === "title")
-      return <Link to={"/movies/" + movie._id}>{movie.title}</Link>;
+      return <Link to={"/movieform/" + movie._id}>{movie.title}</Link>;
     else return _.get(movie, col.path);
   };
 
